@@ -1,0 +1,24 @@
+pub type Square = u8;
+
+pub const FILES: usize = 8;
+pub const RANKS: usize = 8;
+
+// pub const squares: [Square; 64] = generate_squares();
+
+const fn generate_squares() -> [Square; 64] {
+    let mut squares = [0u8; 64];
+}
+pub fn file_of(sq: Square) -> u8 {
+    sq % 8
+}
+pub fn rank_of(sq: Square) -> u8 {
+    sq / 8
+}
+
+pub fn from_rank_file(rank: u8, file: u8) -> Square {
+    rank * 8 + file
+}
+
+pub fn to_rank_file(sq: Square) -> (u8, u8) {
+    (rank_of(sq), file_of(sq))
+}
