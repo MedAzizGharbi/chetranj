@@ -1,5 +1,4 @@
-mod board;
-use board::*;
+use chetranj::board::Board;
 fn main() {
     println!("amjen chess engine");
     let board = Board::new();

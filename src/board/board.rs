@@ -1,36 +1,6 @@
-pub type BitBoard = u64;
-
-#[derive(Debug, Copy, Clone, PartialEq)]
-pub enum Color {
-    White,
-    Black,
-}
-
-#[derive(Debug, Copy, Clone, PartialEq)]
-pub enum Piece {
-    Pawn,
-    Knight,
-    Bishop,
-    Rook,
-    Queen,
-    King,
-}
-
-#[derive(Debug, Copy, Clone, PartialEq)]
-pub struct Side {
-    pub pawns: BitBoard,
-    pub knights: BitBoard,
-    pub bishops: BitBoard,
-    pub rooks: BitBoard,
-    pub queens: BitBoard,
-    pub king: BitBoard,
-}
-
-impl Side {
-    pub fn combined(&self) -> BitBoard {
-        self.pawns | self.knights | self.bishops | self.rooks | self.queens | self.king
-    }
-}
+use super::Side;
+use crate::BitBoard;
+use crate::types::{Color, Piece, Square};
 
 /// El Board hiya 3ibara aala two sides
 /// Kol side hiya Struct feha el pieces lkol  
@@ -42,6 +12,7 @@ impl Side {
 pub struct Board {
     pub white: Side,
     pub black: Side,
+    pub side_to_move: Color,
 }
 
 impl Board {
@@ -63,6 +34,7 @@ impl Board {
                 queens: 0x0800_0000_0000_0000,
                 king: 0x1000_0000_0000_0000,
             },
+            side_to_move: Color::White,
         }
     }
     pub fn combined_occupancy(&self) -> BitBoard {
@@ -213,6 +185,15 @@ mod tests {
             board.black.combined().count_ones(),
             16,
             "Total black pieces count should be 16"
+        );
+    }
+    #[test]
+    fn test_side_to_move() {
+        let board = Board::new();
+        assert_eq!(
+            board.side_to_move,
+            Color::White,
+            "First player to play should be white"
         );
     }
 }
